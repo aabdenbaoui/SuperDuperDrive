@@ -23,7 +23,7 @@ public class RegisterController {
     @PostMapping("/register")
     public String postRegistrationPage(@ModelAttribute User user){
       userService.createUser(user);
-//        System.out.println(user);
+        System.out.println(user);
       return "signup";
     }
 
