@@ -3,9 +3,12 @@ package com.udacity.jwdnd.course1.cloudstorage.mappers;
 import com.udacity.jwdnd.course1.cloudstorage.entities.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.entities.User;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
+@Mapper
 public interface ICredentialMapping {
     @Select("SELECT * FROM CREDENTIALS WHERE username = #{username}")
     User getCredential(String username);
