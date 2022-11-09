@@ -22,6 +22,7 @@ public class RegisterController {
     }
     @PostMapping("/register")
     public String postRegistrationPage(@ModelAttribute User user){
+        System.out.println("post register");
       userService.createUser(user);
         System.out.println(user);
       return "signup";

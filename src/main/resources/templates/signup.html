@@ -15,7 +15,7 @@
             </div>
 
             <h1 class="display-5">Sign Up</h1>
-            <form action="#" method="POST">
+            <form th:action="@{/register}" th:object="${user}"  method="POST">
                 <div th:if="${successMessage}" id="success-msg" class="alert alert-dark">
                     You successfully signed up! Please continue to the <a th:href="@{/login}">login</a> page.
                 </div>
