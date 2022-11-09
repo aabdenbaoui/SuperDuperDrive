@@ -8,18 +8,18 @@ public class File {
     private String contentType;
     private String fileSize;
     private Blob fileData;
-    private User user;
+    private Integer  userId;
 
     public File() {
     }
 
-    public File(String fileId, String fileName, String contentType, String fileSize, Blob fileData, User user) {
+    public File(String fileId, String fileName, String contentType, String fileSize, Blob fileData, Integer  userId) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;
         this.fileSize = fileSize;
         this.fileData = fileData;
-        this.user = user;
+        this.userId = userId;
     }
 
     public String getFileId() {
@@ -62,11 +62,7 @@ public class File {
         this.fileData = fileData;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public Integer  getUserId() {
+        return userId;
     }
 }

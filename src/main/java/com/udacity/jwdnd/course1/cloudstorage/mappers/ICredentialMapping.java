@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface ICredentialMapping {
     @Select("SELECT * FROM CREDENTIALS WHERE username = #{username}")
     User getCredential(String username);
-    @Insert("INSERT INTO CREDENTIALS (url, username, password, key, userid) " +
-            "VALUES(#{url}, #{username}, #{password}, #{key}, #{userid})")
+    @Insert("INSERT INTO CREDENTIALS (url, username, key, password, userid) " +
+            "VALUES(#{url}, #{userName}, #{key}, #{password}, #{userid})")
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")
-    int createCredential(Credential credential);
+    int insert(Credential credential);
 
 }

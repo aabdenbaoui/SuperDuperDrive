@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
 
-     private String userId;
+     private Integer  userId;
      private String username;
      private String salt;
      private String password;
@@ -20,7 +20,7 @@ public class User {
      public User() {
      }
 
-     public User(String userId, String username, String salt, String password, String firstName, String lastName) {
+     public User(Integer  userId, String username, String salt, String password, String firstName, String lastName) {
           this.userId = userId;
           this.username = username;
           this.salt = salt;
@@ -69,7 +69,7 @@ public class User {
           this.lastName = lastName;
      }
 
-     public String getUserId() {
+     public Integer  getUserId() {
           return userId;
      }
 
