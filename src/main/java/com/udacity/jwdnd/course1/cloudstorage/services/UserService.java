@@ -1,7 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.entities.User;
-import com.udacity.jwdnd.course1.cloudstorage.mappers.UserMapper;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.IUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.Base64;
 @Service
 public class UserService {
     @Autowired
-    UserMapper userMapper;
+    IUserMapper userMapper;
     @Autowired
     HashService hashService;
     public int createUser(User user) {
