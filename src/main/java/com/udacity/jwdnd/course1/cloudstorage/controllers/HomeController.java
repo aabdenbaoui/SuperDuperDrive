@@ -16,16 +16,18 @@ public class HomeController {
     @Autowired
     CredentialService credentialService;
 
-    @GetMapping("/home")
+    @GetMapping(value={"/home", "/"})
     public String getHomePage(Model model){
         model.addAttribute("file", new File());
         model.addAttribute("note", new Note());
         model.addAttribute("credential", new Credential());
+        model.addAttribute("credentials", credentialService.getAllCredentials());
         return "home";
     }
     @PostMapping("/saveCredential")
-    public void saveCredential(Credential credential){
+    public String saveCredential(Credential credential){
         credentialService.createCredentialService(credential);
         System.out.println("save credential has been called");
+        return "redirect:/home";
     }
 }

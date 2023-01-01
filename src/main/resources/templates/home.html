@@ -134,14 +134,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="tempCredential: ${credentials}">
                                     <td>
                                         <button type="button" class="btn btn-success">Edit</button>
                                         <a class="btn btn-danger">Delete</a>
                                     </td>
-                                    <th scope="row">Example Credential URL</th>
+                                     <td th:text="${tempCredential.url}" />
+                                     <td th:text="${tempCredential.userName}" />
+                                     <td th:text="${tempCredential.password}" />
+
+                                  <!--  <th scope="row">Example Credential URL</th>
                                     <td>Example Credential Username</td>
-                                    <td>Example Credential Password</td>
+                                    <td>Example Credential Password</td>-->
                                 </tr>
                                 </tbody>
                             </table>
@@ -165,7 +169,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="credential-username" class="col-form-label">Username</label>
-                                                <input type="text" name= "username" class="form-control" id="credential-username" maxlength="30" required>
+                                                <input type="text" name= "userName" class="form-control" id="credential-username" maxlength="30" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="credential-password" class="col-form-label">Password</label>
