@@ -2,10 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.entities.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.entities.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +18,6 @@ public interface ICredentialMapping {
     @Select("SELECT * FROM CREDENTIALS WHERE userid = #{userid}")
     List<Credential> getAllCredentials(Integer userid);
 
-
+   @Delete("DELETE FROM CREDENTIALS WHERE credentialId = #{id}")
+    void deleteById(Integer id);
 }

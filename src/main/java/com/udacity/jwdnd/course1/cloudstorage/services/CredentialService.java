@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -27,23 +28,21 @@ public class CredentialService {
     public int createCredentialService(Credential credential){
         String key = "7x!A%D*G-JaNdRgU";
         Integer userid = authenticationService.getUserId();
-        System.out.println(userid);
         credential.setUserId(userid);
-        System.out.println(encryptionService.encryptValue(credential.getPassword(), key));
-
-        System.out.println( credential.getUserName());
         return credentialMapping.insert(new Credential(null, credential.getUrl(), credential.getUserName(), key, encryptionService.encryptValue(credential.getPassword(), key), userid));
     }
     public List<Credential>  getAllCredentials(){
         List<Credential> credentialsWithUnencryptedPassword = new ArrayList<>();
         Integer userid = authenticationService.getUserId();
-
-//        return credentialMapping.getAllCredentials(userid);
         for(Credential tempCredential: credentialMapping.getAllCredentials(userid)){
             String unencryptedPass =  encryptionService.decryptValue(tempCredential.getPassword(), tempCredential.getKey());
-            credentialsWithUnencryptedPassword.add(new Credential(tempCredential.getUserId(), tempCredential.getUrl(), tempCredential.getUserName(), tempCredential.getKey(), unencryptedPass, tempCredential.getUserId() ));
+            credentialsWithUnencryptedPassword.add(new Credential(tempCredential.getCredentialId(), tempCredential.getUrl(), tempCredential.getUserName(), tempCredential.getKey(), unencryptedPass, tempCredential.getUserId() ));
         }
         return credentialsWithUnencryptedPassword;
     }
 
+    public void deleteById(Integer id) {
+        System.out.println("The id to be deleted: " + id);
+       credentialMapping.deleteById(id);
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+
 public class HomeController {
     @Autowired
     CredentialService credentialService;
@@ -24,10 +25,5 @@ public class HomeController {
         model.addAttribute("credentials", credentialService.getAllCredentials());
         return "home";
     }
-    @PostMapping("/saveCredential")
-    public String saveCredential(Credential credential){
-        credentialService.createCredentialService(credential);
-        System.out.println("save credential has been called");
-        return "redirect:/home";
-    }
+
 }

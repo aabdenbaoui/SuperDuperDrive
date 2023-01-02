@@ -134,19 +134,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="tempCredential: ${credentials}">
-                                    <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
-                                    </td>
-                                     <td th:text="${tempCredential.url}" />
-                                     <td th:text="${tempCredential.userName}" />
-                                     <td th:text="${tempCredential.password}" />
 
-                                  <!--  <th scope="row">Example Credential URL</th>
+                                <tr th:if="${#lists.size(credentials) == 0}">
+                                    <th scope="row">Example Credential URL</th>
                                     <td>Example Credential Username</td>
-                                    <td>Example Credential Password</td>-->
+                                    <td>Example Credential Password</td>
+                                    </td>
+
                                 </tr>
+                                <tr th:each="tempCredential: ${credentials}">
+                                        <td>
+                                            <button type="button" class="btn btn-success">Edit</button>
+                                            <a th:href="@{/credentials/delete(id=${tempCredential.credentialId})}"
+                                               class="btn btn-danger"
+                                               onclick="if(!(confirm('Are you sure you want to delete this credential))) return false"
+                                            >Delete</a>
+                                        </td>
+                                        <td th:text="${tempCredential.url}" />
+                                        <td th:text="${tempCredential.userName}" />
+                                        <td th:text="${tempCredential.password}" />
+                                </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -161,7 +169,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:action="@{/saveCredential}" method="POST">
+                                        <form th:action="@{/credentials/save}" method="POST">
                                             <input type="hidden" name="credentialId" id="credential-id">
                                             <div class="form-group">
                                                 <label for="credential-url" class="col-form-label">URL</label>
