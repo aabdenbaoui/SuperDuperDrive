@@ -75,14 +75,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
+                                <tr th:if="${#lists.size(notes) == 0}">
+                                    <td>
                                             <button type="button" class="btn btn-success">Edit</button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
                                         <th scope="row">Example Note Title</th>
                                         <td>Example Note Description </td>
                                     </tr>
+
+                                        <tr th:each="tempNote: ${notes}">
+                                            <td>
+                                                <button type="button" class="btn btn-success">Edit</button>
+                                                <a th:href="@{/notes/delete(id=${tempNote.noteId})}"
+                                                   class="btn btn-danger"
+                                                   onclick="if(!(confirm('Are you sure you want to delete this note))) return false"
+                                                >Delete</a>
+                                            </td>
+                                            <td th:text="${tempNote.noteTitle}" />
+                                            <td th:text="${tempNote.noteDescription}" />
+                                        </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -97,7 +109,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="POST">
+                                        <form th:action="@{/notes/saveNote}"  method="POST">
                                             <input type="hidden" name="noteId" id="note-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
@@ -139,12 +151,14 @@
                                     <th scope="row">Example Credential URL</th>
                                     <td>Example Credential Username</td>
                                     <td>Example Credential Password</td>
-                                    </td>
-
                                 </tr>
                                 <tr th:each="tempCredential: ${credentials}">
                                         <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
+<!--                                            <form th:action="@{/credentials/showUpdate(id=${tempCredential.credentialId})}">-->
+<!--                                                <button type="button" class="btn btn-success" onclick="showCredentialModal()">Edit</button>-->
+<!--                                            <a th:href="@{/credentials/showUpdate(id=${tempCredential.credentialId})}" class="btn btn-info" onclick="showCredentialModal()">Update</a>-->
+                                            <a  class="btn btn-info" onclick="showCredentialModal()">Update</a>
+
                                             <a th:href="@{/credentials/delete(id=${tempCredential.credentialId})}"
                                                class="btn btn-danger"
                                                onclick="if(!(confirm('Are you sure you want to delete this credential))) return false"
@@ -169,11 +183,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:action="@{/credentials/save}" method="POST">
+                                        <form th:action="@{/credentials/saveOrUpdate}"  method="POST">
                                             <input type="hidden" name="credentialId" id="credential-id">
                                             <div class="form-group">
                                                 <label for="credential-url" class="col-form-label">URL</label>
-                                                <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" required>
+                                                <input type="text" name= "url" class="form-control" id="credential-url"  maxlength="100" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="credential-username" class="col-form-label">Username</label>

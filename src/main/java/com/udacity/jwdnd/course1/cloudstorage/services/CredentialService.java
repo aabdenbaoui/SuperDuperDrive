@@ -25,7 +25,17 @@ public class CredentialService {
     @Autowired
     EncryptionService encryptionService;
 
-    public int createCredentialService(Credential credential){
+
+    public void createOrUpdateCredential(Credential credential){
+        Credential tempCredential = credentialMapping.getCredentialById(credential.getCredentialId());
+        if(tempCredential == null){
+            createCredentialService(credential);
+        }else{
+            updateCredential(credential);
+        }
+
+    }
+    private int createCredentialService(Credential credential){
         String key = "7x!A%D*G-JaNdRgU";
         Integer userid = authenticationService.getUserId();
         credential.setUserId(userid);
@@ -44,5 +54,13 @@ public class CredentialService {
     public void deleteById(Integer id) {
         System.out.println("The id to be deleted: " + id);
        credentialMapping.deleteById(id);
+    }
+
+    private void updateCredential(Credential credential) {
+        credentialMapping.updateCredential(credential);
+    }
+
+    public Credential getCredentialById(Integer id) {
+        return credentialMapping.getCredentialById(id);
     }
 }
