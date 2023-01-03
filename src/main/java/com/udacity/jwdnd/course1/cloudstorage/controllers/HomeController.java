@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,7 +26,6 @@ public class HomeController {
     NoteService noteService;
     @GetMapping(value = {"/home", "/"})
     public String getHomePage(Model model){
-        model.addAttribute("file", new File());
         model.addAttribute("note", new Note());
         model.addAttribute("credential", new Credential());
         model.addAttribute("credentials", credentialService.getAllCredentials());

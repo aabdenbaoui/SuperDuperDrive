@@ -7,13 +7,20 @@ public class File {
     private String fileName;
     private String contentType;
     private String fileSize;
-    private Blob fileData;
+    private byte[] fileData;
     private Integer  userId;
 
     public File() {
     }
 
-    public File(Integer  fileId, String fileName, String contentType, String fileSize, Blob fileData, Integer  userId) {
+    public File(String fileName, String contentType, String fileSize, byte[] fileData) {
+        this.fileName = fileName;
+        this.contentType = contentType;
+        this.fileSize = fileSize;
+        this.fileData = fileData;
+    }
+
+    public File(Integer fileId, String fileName, String contentType, String fileSize, byte[] fileData, Integer  userId) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;
@@ -54,11 +61,11 @@ public class File {
         this.fileSize = fileSize;
     }
 
-    public Blob getFileData() {
+    public byte[] getFileData() {
         return fileData;
     }
 
-    public void setFileData(Blob fileData) {
+    public void setFileData(byte[] fileData) {
         this.fileData = fileData;
     }
 
