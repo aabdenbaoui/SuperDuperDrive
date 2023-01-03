@@ -25,8 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/register/**").permitAll()
-                .antMatchers("/register", "/css/**", "/js/**", "/h2-console/**", "logout").permitAll()
+                .antMatchers("/signup/**").permitAll()
+                .antMatchers("/signup", "/css/**", "/js/**", "/h2-console/**", "logout").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().ignoringAntMatchers("/h2-console/**")//don't apply CSRF protection to /h2-console
                 .and().headers().frameOptions().sameOrigin();//allow use of frame to same origin urls

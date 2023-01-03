@@ -43,7 +43,10 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
-
+//    @Test
+	public void testSignUpPage(){
+		doMockSignUp("UserF", "UserL", "user", "user");
+	}
 	/**
 	 * PLEASE DO NOT DELETE THIS method.
 	 * Helper method for Udacity-supplied sanity checks.
@@ -116,7 +119,6 @@ class CloudStorageApplicationTests {
 		loginButton.click();
 
 		webDriverWait.until(ExpectedConditions.titleContains("Home"));
-
 	}
 
 	/**
@@ -134,7 +136,11 @@ class CloudStorageApplicationTests {
 	public void testRedirection() {
 		// Create a test account
 		doMockSignUp("Redirection","Test","RT","123");
-		
+		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+
+		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-href")));
+		WebElement loginUserName = driver.findElement(By.id("login-href"));
+		loginUserName.click();
 		// Check if we have been redirected to the log in page.
 		Assertions.assertEquals("http://localhost:" + this.port + "/login", driver.getCurrentUrl());
 	}

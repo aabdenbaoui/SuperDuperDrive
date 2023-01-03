@@ -16,6 +16,11 @@ public class LoginController {
     }
     @PostMapping("/login")
     public String postLoginPage(@ModelAttribute User user){
+//        if(result){
+//
+//        }else{
+//
+//        }
         System.out.println(user);
         return null;
     }

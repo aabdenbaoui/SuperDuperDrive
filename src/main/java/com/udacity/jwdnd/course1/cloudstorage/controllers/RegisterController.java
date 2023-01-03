@@ -15,17 +15,32 @@ public class RegisterController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/register")
+    @GetMapping("/signup")
     public String getRegistrationPage(Model model){
           model.addAttribute("user", new User());
           return "signup";
     }
-    @PostMapping("/register")
-    public String postRegistrationPage(@ModelAttribute User user){
-        System.out.println("post register");
-      userService.createUser(user);
-        System.out.println(user);
-      return "signup";
+    @PostMapping("/signup")
+    public String postRegistrationPage(Model model,@ModelAttribute User user){
+        boolean result = true;
+        User tempUser = userService.findUserByUserName(user.getUsername());
+        if(tempUser == null){
+            result = true;
+        }else{
+            result = false;
+        }
+        if (result){
+            model.addAttribute("successMessage", "");
+            userService.createUser(user);
+            return "signup";
+//            return "redirect:/login";
+        }
+        else {
+            model.addAttribute("errorEmailTaken", "");
+            return "signup";
+        }
+//        System.out.println("post register");
+//        System.out.println(user);
     }
 
 }

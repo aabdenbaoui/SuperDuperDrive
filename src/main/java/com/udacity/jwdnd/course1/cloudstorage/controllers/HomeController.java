@@ -5,6 +5,7 @@ import com.udacity.jwdnd.course1.cloudstorage.entities.File;
 import com.udacity.jwdnd.course1.cloudstorage.entities.Note;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.ICredentialMapping;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,12 +25,15 @@ public class HomeController {
     CredentialService credentialService;
     @Autowired
     NoteService noteService;
-    @GetMapping(value = {"/home", "/"})
+    @Autowired
+    FileService fileService;
+    @GetMapping(value = {"/home", "/", "*"})
     public String getHomePage(Model model){
         model.addAttribute("note", new Note());
         model.addAttribute("credential", new Credential());
         model.addAttribute("credentials", credentialService.getAllCredentials());
         model.addAttribute("notes", noteService.getAllNotesByUserId());
+        model.addAttribute("files", fileService.getAllFiles());
         return "home";
     }
 

@@ -15,12 +15,15 @@
             </div>
 
             <h1 class="display-5">Sign Up</h1>
-            <form th:action="@{/register}" th:object="${user}"  method="POST">
+            <form th:action="@{/signup}" th:object="${user}"  method="POST">
                 <div th:if="${successMessage}" id="success-msg" class="alert alert-dark">
-                    You successfully signed up! Please continue to the <a th:href="@{/login}">login</a> page.
+                    You successfully signed up! Please continue to the <a th:href="@{/login}" id ="login-href">login</a> page.
                 </div>
-                <div th:if="${errorMessage}" class="alert alert-danger">
-                    <span>Example Signup Error Message</span>
+                <div th:if="${errorEmailTaken}" class="alert alert-danger">
+                    <span>Username is already taken</span>
+                </div>
+                <div th:if="${passwordError}" class="alert alert-danger">
+                        <span>A minimum 8 characters password contains a combination of uppercase and lowercase letter and number are required.</span>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">

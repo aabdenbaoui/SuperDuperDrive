@@ -49,13 +49,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:if="${#lists.size(files) == 0}">
                                     <td>
                                         <a target="_blank" class="btn btn-success">View</a>
                                         <a  class="btn btn-danger">Delete</a>
                                     </td>
                                     <th scope="row">ExampleFile.txt</th>
                                 </tr>
+                                <tr th:each="tempFile: ${files}">
+                                    <td>
+                                        <a target="_blank" class="btn btn-success">View</a>
+                                        <a  th:href="@{/files/delete(id=${tempFile.fileId})}" class="btn btn-danger">Delete</a>
+                                    </td>
+
+                                    <th scope="row" th:text="${tempFile.fileName}"></th>
+                                </tr>
+
                                 </tbody>
                             </table>
                         </div>
