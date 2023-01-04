@@ -36,7 +36,7 @@ public class RegisterController {
 //            return "redirect:/login";
         }
         else {
-            model.addAttribute("errorEmailTaken", "");
+            model.addAttribute("errorUserTaken", "");
             return "signup";
         }
 //        System.out.println("post register");
