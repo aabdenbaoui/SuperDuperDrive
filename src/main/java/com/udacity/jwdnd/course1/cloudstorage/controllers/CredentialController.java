@@ -30,16 +30,6 @@ public class CredentialController {
         return "redirect:/home";
 //        return "home";
     }
-    @GetMapping("/showUpdate")
-    public String showUpdateCredential(@RequestParam("id") Integer id, Model model) {
-        Credential credential = credentialService.getCredentialById(id);
-        System.out.println(credential);
-        model.addAttribute("theCredential", credential);
-        System.out.println("update credential has been called before deleteById");
-        System.out.println("update credential has been called");
-        return "redirect:/home";
-    }
-
 
 
 

@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.entities.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.entities.Note;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.ICredentialMapping;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.IUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,29 @@ public class CredentialService {
     EncryptionService encryptionService;
 
 
-    public void createOrUpdateCredential(Credential credential){
+    public void createOrUpdateCredential(Credential credential) {
         Credential tempCredential = credentialMapping.getCredentialById(credential.getCredentialId());
-        if(tempCredential == null){
+        if (tempCredential == null) {
             createCredentialService(credential);
-        }else{
+        } else {
             updateCredential(credential);
         }
-
     }
+//        System.out.println(note.getNoteId());
+//        Note noteTemp = noteMapping.getNoteById(note.getNoteId());
+//        Integer userid = authenticationService.getUserId();
+//        if(noteTemp  == null) {
+//            System.out.println("No such note exists. New note will be created");
+//            return noteMapping.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription(), userid));
+//        }else{
+//            System.out.println("The note will id exists. Note will be updated");
+//            note.setUserId(userid);
+//            noteMapping.updateNote(note);
+//            return note.getNoteId();
+//
+//        }
+
+
     private int createCredentialService(Credential credential){
         String key = "7x!A%D*G-JaNdRgU";
         Integer userid = authenticationService.getUserId();
@@ -42,13 +57,7 @@ public class CredentialService {
         return credentialMapping.insert(new Credential(null, credential.getUrl(), credential.getUserName(), key, encryptionService.encryptValue(credential.getPassword(), key), userid));
     }
     public List<Credential>  getAllCredentials(){
-        List<Credential> credentialsWithUnencryptedPassword = new ArrayList<>();
-        Integer userid = authenticationService.getUserId();
-        for(Credential tempCredential: credentialMapping.getAllCredentials(userid)){
-            String unencryptedPass =  encryptionService.decryptValue(tempCredential.getPassword(), tempCredential.getKey());
-            credentialsWithUnencryptedPassword.add(new Credential(tempCredential.getCredentialId(), tempCredential.getUrl(), tempCredential.getUserName(), tempCredential.getKey(), unencryptedPass, tempCredential.getUserId() ));
-        }
-        return credentialsWithUnencryptedPassword;
+        return credentialMapping.getAllCredentials(authenticationService.getUserId());
     }
 
     public void deleteById(Integer id) {
@@ -57,6 +66,10 @@ public class CredentialService {
     }
 
     private void updateCredential(Credential credential) {
+        String key = "7x!A%D*G-JaNdRgU";
+        credential.setKey(key);
+        credential.setPassword(encryptionService.encryptValue(credential.getPassword(), key));
+        credential.setUserId(authenticationService.getUserId());
         credentialMapping.updateCredential(credential);
     }
 
