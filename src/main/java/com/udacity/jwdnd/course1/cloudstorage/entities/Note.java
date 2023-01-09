@@ -10,7 +10,7 @@ public class Note {
     public Note() {
     }
 
-    public Note(Integer  noteId, String noteTitle, String noteDescription,Integer  userId) {
+    public Note(Integer noteId, String noteTitle, String noteDescription,Integer  userId) {
         this.noteId = noteId;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;

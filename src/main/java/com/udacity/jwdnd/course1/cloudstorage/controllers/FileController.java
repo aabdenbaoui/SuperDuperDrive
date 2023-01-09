@@ -3,6 +3,8 @@ package com.udacity.jwdnd.course1.cloudstorage.controllers;
 import com.udacity.jwdnd.course1.cloudstorage.entities.File;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ public class FileController {
     @PostMapping("/uploadFile")
     public String uploadMultiPartFile(@RequestParam("fileUpload") MultipartFile file) throws IOException {
         System.out.println(file);
-       fileService.createFile(new File(StringUtils.cleanPath(file.getOriginalFilename()),  file.getContentType(), String.valueOf(file.getSize()),  file.getInputStream().readAllBytes()));
+       fileService.createFile(file);
         return "redirect:/home";
     }
 
@@ -30,6 +32,17 @@ public class FileController {
     public String deleteById(@RequestParam("id") Integer id){
         fileService.deleteById(id);
         return "redirect:/home";
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadFileById(@RequestParam("id") Integer id){
+       File file = fileService.getFileById(id);
+        System.out.println(fileService.getFileById(id));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
+                .body(file.getFileData());
+//        return "redirect:/home";
+
     }
 
 }
