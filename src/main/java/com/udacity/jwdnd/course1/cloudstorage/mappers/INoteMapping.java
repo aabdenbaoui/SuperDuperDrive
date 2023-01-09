@@ -19,4 +19,8 @@ public interface INoteMapping {
 
     @Delete("DELETE FROM NOTES WHERE noteId = #{id}")
     void deleteById(Integer id);
+    @Update("UPDATE NOTES SET notetitle = #{noteTitle}, notedescription=#{noteDescription}, userid =#{userId} WHERE noteId =  #{noteId}")
+    void updateNote(Note note);
+    @Select("SELECT * FROM NOTES WHERE noteId = #{id}")
+    Note getNoteById(Integer id);
 }

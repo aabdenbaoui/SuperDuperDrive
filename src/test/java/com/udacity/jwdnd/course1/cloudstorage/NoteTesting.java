@@ -168,8 +168,90 @@ public class NoteTesting {
 
     @Test
     public void WriteTestThatEditsExistingNoteAndVerifiesThatTheChangesAreDisplayed(){
+        doMockSignUp("UserTestEditF", "UserTestEditL", "userNameNoteEdit", "passFake");
+        doLogIn("userNameNoteEdit", "passFake");
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 5, 5);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
+        WebElement notesHref = driver.findElement(By.id("nav-notes-tab"));
+        notesHref.click();
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-note-button-id")));
+        WebElement addNoteButton = driver.findElement(By.id("add-note-button-id"));
+        addNoteButton.click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteModalLabel")));
+        WebElement noteModalLabel = driver.findElement(By.id("noteModalLabel"));
+        Assertions.assertTrue(noteModalLabel.getText().contains("Note"));
+//		add-note-button-id
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-title")));
+        WebElement noteTitle = driver.findElement(By.id("note-title"));
+        noteTitle.click();
+        noteTitle.sendKeys("Note Title 01");
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-description")));
+        WebElement noteDescription = driver.findElement(By.id("note-description"));
+        noteDescription.click();
+        noteDescription.sendKeys("Note Description 01");
+        //noteSubmit
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-submit-save")));
+        WebElement noteSubmit = driver.findElement(By.id("note-submit-save"));
+        noteSubmit.click();
+//		noteTitleId
+//		noteDescriptionId
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
+        WebElement notesHrefSecondRound = driver.findElement(By.id("nav-notes-tab"));
+        notesHrefSecondRound.click();
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteTitleId")));
+        WebElement noteTitleOutput = driver.findElement(By.id("noteTitleId"));
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteDescriptionId")));
+        WebElement noteDescriptionOutput = driver.findElement(By.id("noteDescriptionId"));
+        Assertions.assertEquals(noteTitleOutput.getText(), "Note Title 01");
+        Assertions.assertEquals(noteDescriptionOutput.getText(), "Note Description 01");
+
+        //LOOK FOR edit and CLICK
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
+        WebElement notesHrefThirdRound = driver.findElement(By.id("nav-notes-tab"));
+        notesHrefSecondRound.click();
+
+//        note-edit-btn
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-edit-btn")));
+        WebElement clickOnNotEdit = driver.findElement(By.id("note-edit-btn"));
+        clickOnNotEdit.click();
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-title")));
+        WebElement noteTitleEdit = driver.findElement(By.id("note-title"));
+        noteTitleEdit.click();
+        noteTitleEdit.clear();
+//        noteTitleEdit.click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-title")));
+        WebElement noteTitleEdit02= driver.findElement(By.id("note-title"));
+        //        noteTitleEdit.click();
+        noteTitleEdit02.sendKeys("Note Title 02");
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-description")));
+        WebElement noteDescriptionEdit = driver.findElement(By.id("note-description"));
+        noteDescriptionEdit.click();
+        noteDescriptionEdit.clear();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-description")));
+        WebElement noteDescriptionEdit02 = driver.findElement(By.id("note-description"));
+        noteDescriptionEdit.click();
+        noteDescriptionEdit02.sendKeys("Note Description 02");
+        //noteSubmit
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-submit-save")));
+        WebElement noteSubmitEdit = driver.findElement(By.id("note-submit-save"));
+        noteSubmitEdit.click();
 
 
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
+        WebElement notesHrefFourthRound = driver.findElement(By.id("nav-notes-tab"));
+        notesHrefFourthRound.click();
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteTitleId")));
+        WebElement noteTitleOutputEdit = driver.findElement(By.id("noteTitleId"));
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteDescriptionId")));
+        WebElement noteDescriptionOutputEdit = driver.findElement(By.id("noteDescriptionId"));
+        Assertions.assertEquals(noteTitleOutputEdit.getText(), "Note Title 02");
+        Assertions.assertEquals(noteDescriptionOutputEdit.getText(), "Note Description 02");
 
     }
 
@@ -205,7 +287,6 @@ public class NoteTesting {
         Assertions.assertEquals(noteDescriptionEmptyOutput.getText(), "Example Note Description");
         Assertions.assertTrue(noteDescriptionEmptyOutput.getText().equals("Example Note Description"));
         Assertions.assertFalse(noteDescriptionEmptyOutput.getText().equals("Example XXX Description"));
-
     }
 
     private WebElement getWebElement(WebDriverWait webDriverWait, String elementId){

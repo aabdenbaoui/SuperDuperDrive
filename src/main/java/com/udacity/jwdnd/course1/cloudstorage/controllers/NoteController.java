@@ -1,6 +1,5 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
-import com.udacity.jwdnd.course1.cloudstorage.entities.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.entities.Note;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class NoteController {
     @Autowired
     NoteService noteService;
-    @PostMapping("/saveNote")
+    @PostMapping("/saveOrUpdateNote")
     public String saveOrUpdateCredential(Note note) {
         System.out.println("save or update");
-        noteService.createNote(note);
+        noteService.createOrUpdateNote(note);
         return "redirect:/home";
     }
     @GetMapping("/delete")
