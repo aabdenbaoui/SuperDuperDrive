@@ -10,19 +10,54 @@
     </head>
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container justify-content-center w-50 p-3" style="margin-top: 5em;">
-            <div class="alert alert-success fill-parent">
-                <h1 class="display-5" id="success">Success</h1>
-                <span>Your changes were successfully saved. Click <a>here</a> to continue.</span>
+            <div th:if="${noteSuccess}" class="alert alert-success fill-parent">
+                <h1   class="display-5" id="noteSuccess">Success</h1>
+                <span>Your note changes were successfully saved. Click  <a id = "note-added-success-id" href="/">here</a> to continue.</span>
             </div>
-            <div class="alert alert-danger fill-parent">
-                <h1 class="display-5">Error</h1>
+            <div th:if="${deleteNoteSuccess}" class="alert alert-success fill-parent">
+                <h1   class="display-5" id="deleteNoteSuccess">Delete Success</h1>
+                <span>Your note was successfully deleted. Click  <a id = "note-delete-success-id" href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${credentialSuccess}" class="alert alert-success fill-parent">
+                <h1   class="display-5" id="credentialSuccess">Success</h1>
+                <span>Your credential changes were successfully saved. Click  <a id = "credential-added-success-id" href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${credentialDeleteSuccess}" class="alert alert-success fill-parent">
+                <h1   class="display-5" id="credentialDeleteSuccess">Delete Success</h1>
+                <span>Your credential was successfully deleted. Click  <a id = "credential-delete-success-id" href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${fileSuccess}" class="alert alert-success fill-parent">
+                <h1   class="display-5" id="fileSuccess">Success</h1>
+                <span>Your file changes were successfully saved. Click <a href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${fileDownloadSuccess}" class="alert alert-success fill-parent">
+                <h1   class="display-5" id="fileDownloadSuccess">Success</h1>
+                <span>Your file was successfully downloaded. Click <a href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${deleteFileSuccess}" class="alert alert-success fill-parent">
+                <h1   class="display-5" id="fileDeleteSuccess">Delete Success</h1>
+                <span>Your file was successfully deleted. Click  <a href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${error}"  class="alert alert-danger fill-parent">
+                <h1  id = "error" class="display-5">Error</h1>
                 <span>Your changes were not saved. Click <a>here</a> to continue.</span>
             </div>
-            <div class="alert alert-danger fill-parent">
-                <h1 class="display-5">Error</h1>
-                <span>Example Error Message</span>
-                <span>Click <a>here</a> to continue.</span>
+            <div th:if="${fileExceedSizeError}"  class="alert alert-danger fill-parent">
+                <h1  id = "fileExceedSizeError" class="display-5">Error</h1>
+                <span>Your changes were not saved. You could not upload file bigger than 30 mb.<a href="/">here</a> to continue.</span>
             </div>
+            <div th:if="${fileErrorDuplicate}"  class="alert alert-danger fill-parent">
+                <h1  id = "fileErrorDuplicate" class="display-5">Error</h1>
+                <span>Your changes were not saved. The file already exists in the system. Please delete the file and upload again. <a href="/">here</a> to continue.</span>
+            </div>
+
+<!--            fileErrorDuplicate-->
+<!--       fileExceedSizeError     -->
+<!--            <div class="alert alert-danger fill-parent">-->
+<!--                <h1 class="display-5">Error</h1>-->
+<!--                <span>Example Error Message</span>-->
+<!--                <span>Click <a>here</a> to continue.</span>-->
+<!--            </div>-->
         </div>
     </body>
 </html>

@@ -20,9 +20,12 @@ public class FileService {
     AuthenticationService authenticationService;
 
     public int createFile(MultipartFile file) throws IOException {
-//        (null, StringUtils.cleanPath(file.getOriginalFilename()),  file.getContentType(), String.valueOf(file.getSize()),  file.getInputStream().readAllBytes()))
         Integer userid = authenticationService.getUserId();
-        return fileMapper.insert(new File(null, StringUtils.cleanPath(file.getOriginalFilename()), file.getContentType(), String.valueOf(file.getSize()),  file.getInputStream().readAllBytes(),userid));
+        if(fileMapper.getFileByName(file.getOriginalFilename()) == null){
+            return fileMapper.insert(new File(null, StringUtils.cleanPath(file.getOriginalFilename()), file.getContentType(), String.valueOf(file.getSize()),  file.getInputStream().readAllBytes(),userid));
+        }else{
+            return 0;
+        }
     }
 
     public List<File> getAllFiles(){

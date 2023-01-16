@@ -29,26 +29,13 @@ public class CredentialService {
 
     public void createOrUpdateCredential(Credential credential) {
         Credential tempCredential = credentialMapping.getCredentialById(credential.getCredentialId());
+        System.out.println(credential.getCredentialId() + ":" + credential.getUrl());
         if (tempCredential == null) {
             createCredentialService(credential);
         } else {
             updateCredential(credential);
         }
     }
-//        System.out.println(note.getNoteId());
-//        Note noteTemp = noteMapping.getNoteById(note.getNoteId());
-//        Integer userid = authenticationService.getUserId();
-//        if(noteTemp  == null) {
-//            System.out.println("No such note exists. New note will be created");
-//            return noteMapping.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription(), userid));
-//        }else{
-//            System.out.println("The note will id exists. Note will be updated");
-//            note.setUserId(userid);
-//            noteMapping.updateNote(note);
-//            return note.getNoteId();
-//
-//        }
-
 
     private int createCredentialService(Credential credential){
         String key = "7x!A%D*G-JaNdRgU";

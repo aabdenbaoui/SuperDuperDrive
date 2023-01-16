@@ -148,8 +148,7 @@ public class NoteTesting {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-submit-save")));
         WebElement noteSubmit = driver.findElement(By.id("note-submit-save"));
         noteSubmit.click();
-//		noteTitleId
-//		noteDescriptionId
+        getWebElement(webDriverWait, "note-added-success-id").click();
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
         WebElement notesHrefSecondRound = driver.findElement(By.id("nav-notes-tab"));
         notesHrefSecondRound.click();
@@ -191,8 +190,8 @@ public class NoteTesting {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-submit-save")));
         WebElement noteSubmit = driver.findElement(By.id("note-submit-save"));
         noteSubmit.click();
-//		noteTitleId
-//		noteDescriptionId
+        getWebElement(webDriverWait, "note-added-success-id").click();
+
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
         WebElement notesHrefSecondRound = driver.findElement(By.id("nav-notes-tab"));
         notesHrefSecondRound.click();
@@ -237,6 +236,7 @@ public class NoteTesting {
         WebElement noteSubmitEdit = driver.findElement(By.id("note-submit-save"));
         noteSubmitEdit.click();
 
+        getWebElement(webDriverWait, "note-added-success-id").click();
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
         WebElement notesHrefFourthRound = driver.findElement(By.id("nav-notes-tab"));

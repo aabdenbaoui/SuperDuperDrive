@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,20 +18,23 @@ public class CredentialController {
     @Autowired
     CredentialService credentialService;
     @PostMapping("/saveOrUpdate")
-    public String saveOrUpdateCredential(Credential credential) {
-        System.out.println("save or update");
+    public String saveOrUpdateCredential(Credential credential, RedirectAttributes ra) {
         credentialService.createOrUpdateCredential(credential);
-        return "redirect:/home";
+        ra.addFlashAttribute("credentialSuccess", "");
+        return "redirect:/result";
     }
     @GetMapping("/delete")
-    public String deleteCredential(@RequestParam("id") Integer id) {
-        System.out.println("delete credential has been called before deleteById");
+    public String deleteCredential(@RequestParam("id") Integer id, RedirectAttributes ra) {
+        ra.addFlashAttribute("credentialDeleteSuccess", "");
         credentialService.deleteById(id);
-        System.out.println("delete credential has been called");
-        return "redirect:/home";
+        return "redirect:/result";
 //        return "home";
     }
-
-
+    @GetMapping("/update")
+    public String getCredentialById(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes){
+        System.out.println(credentialService.getCredentialById(id));
+        redirectAttributes.addFlashAttribute("aCredential", credentialService.getCredentialById(id));
+        return "redirect:/home";
+    }
 
 }

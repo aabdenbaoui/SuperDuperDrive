@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegisterController {
@@ -21,7 +22,8 @@ public class RegisterController {
           return "signup";
     }
     @PostMapping("/signup")
-    public String postRegistrationPage(Model model,@ModelAttribute User user){
+    public String postRegistrationPage(Model model,@ModelAttribute User user, RedirectAttributes redirectAttributes){
+        String successMessage =   "You successfully signed up! Please sign in below";
         boolean result = true;
         User tempUser = userService.findUserByUserName(user.getUsername());
         if(tempUser == null){
@@ -30,10 +32,10 @@ public class RegisterController {
             result = false;
         }
         if (result){
-            model.addAttribute("successMessage", "");
+//            model.addAttribute("successMessage", "");
             userService.createUser(user);
-            return "signup";
-//            return "redirect:/login";
+            redirectAttributes.addFlashAttribute("successMessage", successMessage);
+            return "redirect:/login";
         }
         else {
             model.addAttribute("errorUserTaken", "");

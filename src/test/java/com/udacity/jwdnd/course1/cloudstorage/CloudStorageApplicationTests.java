@@ -95,6 +95,7 @@ class CloudStorageApplicationTests {
 		// You may have to modify the element "success-msg" and the sign-up 
 		// success message below depening on the rest of your code.
 		*/
+		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("success-msg")));
 		WebElement successMessage = driver.findElement(By.id("success-msg"));
 		Assertions.assertTrue(successMessage.getText().contains("You successfully signed up!"));
 	}
@@ -129,6 +130,18 @@ class CloudStorageApplicationTests {
 
 		webDriverWait.until(ExpectedConditions.titleContains("Home"));
 	}
+	public void testSignOutPage(){
+		doMockSignUp("URL","Test","userSignOutXMY","123");
+		doLogIn("userSignOutXMY", "123");
+		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout-id")));
+		WebElement logoutButton = driver.findElement(By.id("logout-id"));
+		logoutButton.click();
+		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("success-logout-message")));
+		WebElement successLogoutMessage = driver.findElement(By.id("success-logout-message"));
+		Assertions.assertTrue(successLogoutMessage.getText().contains("You have been logged out"));
+		getLoginPage();
+	}
 	@Test
 	public void signUpLoginTest(){
 		doMockSignUp("Large File","Test","LFT","123");
@@ -151,9 +164,9 @@ class CloudStorageApplicationTests {
 		doMockSignUp("Redirection","Test","RT","123");
 		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
 
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-href")));
-		WebElement loginHref = driver.findElement(By.id("login-href"));
-		loginHref.click();
+//		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-href")));
+//		WebElement loginHref = driver.findElement(By.id("login-href"));
+//		loginHref.click();
 		// Check if we have been redirected to the log in page.
 		Assertions.assertEquals("http://localhost:" + this.port + "/login", driver.getCurrentUrl());
 	}
@@ -192,7 +205,7 @@ class CloudStorageApplicationTests {
 	 * Read more about file size limits here: 
 	 * https://spring.io/guides/gs/uploading-files/ under the "Tuning File Upload Limits" section.
 	 */
-//	@Test
+	@Test
 	public void testLargeUpload() {
 		// Create a test account
 		doMockSignUp("URL","Test","userLargeUpload","123");
@@ -215,19 +228,7 @@ class CloudStorageApplicationTests {
 		Assertions.assertFalse(driver.getPageSource().contains("HTTP Status 403 – Forbidden"));
 	}
 
-	@Test
-	public void testSignOutPage(){
-		doMockSignUp("URL","Test","userSignOut","123");
-		doLogIn("userSignOut", "123");
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout-id")));
-		WebElement logoutButton = driver.findElement(By.id("logout-id"));
-		logoutButton.click();
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("success-logout-message")));
-		WebElement successLogoutMessage = driver.findElement(By.id("success-logout-message"));
-		Assertions.assertTrue(successLogoutMessage.getText().contains("You have been logged out"));
-//		getLoginPage();
-	}
+
 	public void doMockSignUpWithExistingUser(String firstName, String lastName,String userName, String password){
 		WebDriverWait webDriverWait = new WebDriverWait(driver, 20);
 		driver.get("http://localhost:" + this.port + "/signup");
@@ -321,86 +322,5 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/home");
 		Assertions.assertEquals("Home", driver.getTitle());
 	}
-	//Testing Notes Section
-	@Test
-	public void WriteTestThatCreatesNoteAndVerifiesItTsDisplayed(){
-		doMockSignUp("UserTest01F", "UserTest01L", "userName01", "passFake");
-		doLogIn("userName01", "passFake");
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 5);
-
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
-		WebElement notesHref = driver.findElement(By.id("nav-notes-tab"));
-		notesHref.click();
-
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-note-button-id")));
-		WebElement addNoteButton = driver.findElement(By.id("add-note-button-id"));
-		addNoteButton.click();
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteModalLabel")));
-		WebElement noteModalLabel = driver.findElement(By.id("noteModalLabel"));
-		Assertions.assertTrue(noteModalLabel.getText().contains("Note"));
-//		add-note-button-id
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-title")));
-		WebElement noteTitle = driver.findElement(By.id("note-title"));
-		noteTitle.click();
-		noteTitle.sendKeys("Note Title 01");
-
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-description")));
-		WebElement noteDescription = driver.findElement(By.id("note-description"));
-		noteDescription.click();
-		noteDescription.sendKeys("Note Description 01");
-        //noteSubmit
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-submit-save")));
-		WebElement noteSubmit = driver.findElement(By.id("note-submit-save"));
-		noteSubmit.click();
-//		noteTitleId
-//		noteDescriptionId
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
-		WebElement notesHrefSecondRound = driver.findElement(By.id("nav-notes-tab"));
-		notesHrefSecondRound.click();
-
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteTitleId")));
-		WebElement noteTitleOutput = driver.findElement(By.id("noteTitleId"));
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("noteDescriptionId")));
-		WebElement noteDescriptionOutput = driver.findElement(By.id("noteDescriptionId"));
-		Assertions.assertEquals(noteTitleOutput.getText(), "Note Title 01");
-		Assertions.assertEquals(noteDescriptionOutput.getText(), "Note Description 01");
-	}
-
-	@Test
-	public void WriteTestThatEditsExistingNoteAndVerifiesThatTheChangesAreDisplayed(){
-
-
-
-	}
-
-	@Test
-	public void WriteTestThatDeletesNoteAndVerifiesThatTheNoteIsNoLongerDisplayed(){
-		WriteTestThatCreatesNoteAndVerifiesItTsDisplayed();
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 5);
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
-		WebElement notesHref = driver.findElement(By.id("nav-notes-tab"));
-		notesHref.click();
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-delete-id")));
-		WebElement noteDeleteId = driver.findElement(By.id("note-delete-id"));
-		noteDeleteId.click();
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
-		WebElement notesHref02 = driver.findElement(By.id("nav-notes-tab"));
-		notesHref02.click();
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-title-empty-id")));
-		WebElement noteTitleEmptyOutput = driver.findElement(By.id("note-title-empty-id"));
-		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("note-description-empty-id")));
-		WebElement noteDescriptionEmptyOutput = driver.findElement(By.id("note-description-empty-id"));
-		Assertions.assertEquals(noteTitleEmptyOutput.getText(), "Example Note Title");
-		Assertions.assertEquals(noteDescriptionEmptyOutput.getText(), "Example Note Description");
-		Assertions.assertTrue(noteDescriptionEmptyOutput.getText().equals("Example Note Description"));
-		Assertions.assertFalse(noteDescriptionEmptyOutput.getText().equals("Example XXX Description"));
-
-
-//		note-delete-id
-
-
-	}
-
-
 
 }

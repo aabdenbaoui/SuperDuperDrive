@@ -26,4 +26,6 @@ public interface IFileMapper {
 
     @Select("SELECT * FROM Files WHERE fileId = #{id}")
     File getFileById(Integer id);
+    @Select("SELECT * FROM Files WHERE filename = #{name}")
+    File getFileByName(String name);
 }

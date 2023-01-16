@@ -146,7 +146,7 @@ public class CredentialTesting {
        //submit the result
         WebElement noteSubmit = getWebElement(webDriverWait, "credential-submit-save");
         noteSubmit.click();
-
+       getWebElement(webDriverWait, "credential-added-success-id").click();
         //click on crednetial-nav-tab
         getWebElement(webDriverWait, "nav-credentials-tab").click();
 
@@ -191,9 +191,10 @@ public class CredentialTesting {
        credentialPassword.click();
        credentialPassword.sendKeys("passFake01");
        //submit the result
-       WebElement noteSubmit = getWebElement(webDriverWait, "credential-submit-save");
-       noteSubmit.click();
-
+       WebElement credentialSubmit = getWebElement(webDriverWait, "credential-submit-save");
+       credentialSubmit.click();
+        WebElement credentialAddedSuccess = getWebElement(webDriverWait, "credential-added-success-id");
+        credentialAddedSuccess.click();
        //click on crednetial-nav-tab
        getWebElement(webDriverWait, "nav-credentials-tab").click();
 
@@ -216,10 +217,12 @@ public class CredentialTesting {
 
        getWebElement(webDriverWait, "delete-credential-id").click();
 
+        WebElement credentialDeleteSuccess = getWebElement(webDriverWait, "credential-delete-success-id");
+        credentialDeleteSuccess.click();
         getWebElement(webDriverWait, "nav-credentials-tab").click();
 
         WebElement emptyUrlId = getWebElement(webDriverWait, "empty-url-id");
-       Assertions.assertEquals(emptyUrlId.getText(), "Example Credential URL");
+        Assertions.assertEquals(emptyUrlId.getText(), "Example Credential URL");
 
    }
    @Test
@@ -249,6 +252,8 @@ public class CredentialTesting {
        //submit the result
        getWebElement(webDriverWait, "credential-submit-save").click();
 
+       WebElement credentialAddedSuccess = getWebElement(webDriverWait, "credential-added-success-id");
+       credentialAddedSuccess.click();
        //click on crednetial-nav-tab
        getWebElement(webDriverWait, "nav-credentials-tab").click();
 
@@ -268,7 +273,7 @@ public class CredentialTesting {
        Assertions.assertFalse(credentialTextIdPassword.getText().equals("passFake01"));
 
        getWebElement(webDriverWait, "nav-credentials-tab").click();
-       getWebElement(webDriverWait, "update-credential-id").click();
+       getWebElement(webDriverWait, "edit-credential-id").click();
        WebElement credentialUrlEdit = getWebElement(webDriverWait, "credential-url");
        credentialUrlEdit.click();
        credentialUrlEdit.clear();
@@ -288,7 +293,7 @@ public class CredentialTesting {
        credentialPasswordEdit.sendKeys("passFake01");
        //submit the result
        getWebElement(webDriverWait, "credential-submit-save").click();
-
+       getWebElement(webDriverWait, "credential-added-success-id").click();
        getWebElement(webDriverWait, "nav-credentials-tab").click();
 
        WebElement credentialTextIdUrlEdit =  getWebElement(webDriverWait, "credentialTextIdUrl");

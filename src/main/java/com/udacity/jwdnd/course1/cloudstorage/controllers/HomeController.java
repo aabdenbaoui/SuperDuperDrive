@@ -5,6 +5,7 @@ import com.udacity.jwdnd.course1.cloudstorage.entities.File;
 import com.udacity.jwdnd.course1.cloudstorage.entities.Note;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.ICredentialMapping;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,27 @@ import java.io.IOException;
 @Controller
 public class HomeController {
     @Autowired
+    EncryptionService encryptionService;
+    @Autowired
     CredentialService credentialService;
     @Autowired
     NoteService noteService;
     @Autowired
     FileService fileService;
-    @GetMapping(value = {"/home", "/", "*"})
+    @GetMapping(value = {"/home", "/"})
     public String getHomePage(Model model){
         model.addAttribute("note", new Note());
         model.addAttribute("credential", new Credential());
         model.addAttribute("credentials", credentialService.getAllCredentials());
         model.addAttribute("notes", noteService.getAllNotesByUserId());
         model.addAttribute("files", fileService.getAllFiles());
+        model.addAttribute("encryptionService", encryptionService);
+
         return "home";
+    }
+    @GetMapping("*")
+    public String redirectToHome(){
+        return "404";
     }
 
 
