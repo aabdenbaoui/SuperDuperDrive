@@ -21,14 +21,11 @@ public class NoteService {
         Note noteTemp = noteMapping.getNoteById(note.getNoteId());
         Integer userid = authenticationService.getUserId();
         if(noteTemp  == null) {
-            System.out.println("No such note exists. New note will be created");
-            return noteMapping.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription(), userid));
+            return createNote(note, userid);
         }else{
-            System.out.println("The note will id exists. Note will be updated");
             note.setUserId(userid);
             noteMapping.updateNote(note);
             return note.getNoteId();
-
         }
     }
     public List<Note> getAllNotesByUserId(){
@@ -37,7 +34,17 @@ public class NoteService {
     }
 
     public void deleteById(Integer id) {
-            System.out.println("The id to be deleted: " + id);
             noteMapping.deleteById(id);
+    }
+
+    public int createNote(Note note, Integer userid){
+
+        if(noteMapping.getNoteByTitle(note.getNoteTitle()) != null){
+            throw new IllegalArgumentException("Duplicate Note");
+        }
+        if(note.getNoteDescription().length() >= 1000){
+            throw new IllegalArgumentException("Description is too long");
+        }
+        return noteMapping.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription(), userid));
     }
 }

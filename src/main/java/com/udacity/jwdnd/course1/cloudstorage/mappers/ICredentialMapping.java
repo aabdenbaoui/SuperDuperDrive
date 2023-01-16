@@ -11,6 +11,8 @@ import java.util.List;
 public interface ICredentialMapping {
     @Select("SELECT * FROM CREDENTIALS WHERE username = #{username}")
     User getCredential(String username);
+    @Select("SELECT * FROM CREDENTIALS WHERE url = #{url}")
+    User getCredentialByUrl(String url);
     @Select("SELECT * FROM CREDENTIALS WHERE credentialId = #{id}")
     Credential getCredentialById(Integer id);
     @Insert("INSERT INTO CREDENTIALS (url, username, key, password, userid) " +

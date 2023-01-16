@@ -25,19 +25,20 @@ public class CredentialService {
 
     @Autowired
     EncryptionService encryptionService;
-
-
-    public void createOrUpdateCredential(Credential credential) {
+    public void  createOrUpdateCredential(Credential credential) {
         Credential tempCredential = credentialMapping.getCredentialById(credential.getCredentialId());
         System.out.println(credential.getCredentialId() + ":" + credential.getUrl());
         if (tempCredential == null) {
-            createCredentialService(credential);
+             createCredentialService(credential);
         } else {
-            updateCredential(credential);
+             updateCredential(credential);
         }
     }
 
     private int createCredentialService(Credential credential){
+        if(credentialMapping.getCredentialByUrl(credential.getUrl()) != null){
+            throw new IllegalArgumentException("Duplicate url");
+        }
         String key = "7x!A%D*G-JaNdRgU";
         Integer userid = authenticationService.getUserId();
         credential.setUserId(userid);

@@ -17,18 +17,27 @@ public class NoteController {
     NoteService noteService;
     @PostMapping("/saveOrUpdateNote")
     public String saveOrUpdateCredential(Note note, RedirectAttributes ra) {
-        ra.addFlashAttribute("noteSuccess", "");
-        noteService.createOrUpdateNote(note);
-        return "redirect:/result";
-//        System.out.println("save or update");
-//        return "redirect:/home";
+        try{
+            noteService.createOrUpdateNote(note);
+            ra.addFlashAttribute("noteSuccess", "");
+            return "redirect:/result";
+        }catch(IllegalArgumentException exp){
+            if(exp.getMessage().equals("Duplicate Note")){
+                ra.addFlashAttribute("noteErrorDuplicate", "");
+                return "redirect:/result";
+            }else{
+                ra.addFlashAttribute("noteErrorDescriptionIsLong", "");
+                return "redirect:/result";
+            }
+
+        }
+
     }
     @GetMapping("/delete")
     public String deleteCredential(@RequestParam("id") Integer id, RedirectAttributes ra) {
         ra.addFlashAttribute("deleteNoteSuccess", "");
         noteService.deleteById(id);
         return "redirect:/result";
-//        return "home";
     }
 
 }

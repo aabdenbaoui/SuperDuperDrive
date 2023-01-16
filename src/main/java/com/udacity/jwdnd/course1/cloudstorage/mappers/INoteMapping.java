@@ -23,4 +23,7 @@ public interface INoteMapping {
     void updateNote(Note note);
     @Select("SELECT * FROM NOTES WHERE noteId = #{id}")
     Note getNoteById(Integer id);
+
+    @Select("SELECT * FROM NOTES WHERE noteTitle = #{title}")
+    Note getNoteByTitle(String title);
 }

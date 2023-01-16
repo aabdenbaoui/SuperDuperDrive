@@ -50,14 +50,19 @@
                 <h1  id = "fileErrorDuplicate" class="display-5">Error</h1>
                 <span>Your changes were not saved. The file already exists in the system. Please delete the file and upload again. <a href="/">here</a> to continue.</span>
             </div>
+            <div th:if="${credentialErrorDuplicate}"  class="alert alert-danger fill-parent">
+                <h1  id = "credentialErrorDuplicate" class="display-5">Error</h1>
+                <span>Your changes were not saved. The Credential already exists in the system. Please delete the credential and upload again. <a href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${noteErrorDuplicate}"  class="alert alert-danger fill-parent">
+                <h1  id = "noteErrorDuplicate" class="display-5">Error</h1>
+                <span>Your changes were not saved. The Note already exists in the system. Please delete the note and upload again. <a href="/">here</a> to continue.</span>
+            </div>
+            <div th:if="${noteErrorDescriptionIsLong}"  class="alert alert-danger fill-parent">
+                <h1  id = "noteErrorDescriptionIsLong" class="display-5">Error</h1>
+                <span>Your changes were not saved. The Note Description input exceeds maximum allowed characters 1000 <a href="/">here</a> to continue.</span>
+            </div>
 
-<!--            fileErrorDuplicate-->
-<!--       fileExceedSizeError     -->
-<!--            <div class="alert alert-danger fill-parent">-->
-<!--                <h1 class="display-5">Error</h1>-->
-<!--                <span>Example Error Message</span>-->
-<!--                <span>Click <a>here</a> to continue.</span>-->
-<!--            </div>-->
         </div>
     </body>
 </html>

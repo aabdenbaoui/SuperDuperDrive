@@ -19,9 +19,14 @@ public class CredentialController {
     CredentialService credentialService;
     @PostMapping("/saveOrUpdate")
     public String saveOrUpdateCredential(Credential credential, RedirectAttributes ra) {
-        credentialService.createOrUpdateCredential(credential);
-        ra.addFlashAttribute("credentialSuccess", "");
-        return "redirect:/result";
+        try {
+            credentialService.createOrUpdateCredential(credential);
+            ra.addFlashAttribute("credentialSuccess", "");
+            return "redirect:/result";
+        }catch(IllegalArgumentException exp){
+            ra.addFlashAttribute("credentialErrorDuplicate", "");
+           return "redirect:/result";
+        }
     }
     @GetMapping("/delete")
     public String deleteCredential(@RequestParam("id") Integer id, RedirectAttributes ra) {
